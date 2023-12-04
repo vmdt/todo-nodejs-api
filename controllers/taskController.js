@@ -62,3 +62,19 @@ exports.deleteTask = catchAsync(async (req, res, next) => {
         data: null
     });
 });
+
+exports.search = catchAsync(async (req, res, next) => {
+    const queryField = new RegExp(req.query.q, 'i');
+    const tasks = await Task.find({
+        category: {$regex: queryField},
+        user: req.user._id
+    });
+
+    return res.status(200).json({
+        status: 'success',
+        data: {
+            results: tasks.length,
+            tasks
+        }
+    });
+});

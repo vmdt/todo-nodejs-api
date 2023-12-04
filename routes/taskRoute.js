@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.use(isLoggedIn);
 
+router.get('/search', taskController.search);
+
 router
  .route('/')
  .get(taskController.getTasksByUser)
